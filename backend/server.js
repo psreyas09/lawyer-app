@@ -9,7 +9,22 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://your-vercel-deployment-url.vercel.app'
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
+}));
+
 app.use(express.json());
 
 // Environment variables for API keys (should be set in .env file)

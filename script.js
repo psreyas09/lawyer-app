@@ -66,7 +66,7 @@ class VirtualLawyer {
 
     async searchLegalCases(query, court, year) {
         try {
-            const response = await fetch('http://localhost:3000/proxy/kanoon/search', {
+            const response = await fetch('/proxy/kanoon/search', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -188,7 +188,7 @@ class VirtualLawyer {
 
     async getGeminiResponse(userMessage) {
         try {
-            const response = await fetch('http://localhost:3000/proxy/gemini/chat', {
+            const response = await fetch('/proxy/gemini/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
