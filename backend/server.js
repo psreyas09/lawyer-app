@@ -1,5 +1,5 @@
 // Load environment variables from .env file
-require('dotenv').config({ path: '/home/sreyas/College/test/.env' });
+require('dotenv').config();
 
 const express = require('express');
 const axios = require('axios');
@@ -126,6 +126,4 @@ app.post('/proxy/gemini/chat', async (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-    console.log(`Backend proxy server running on port ${PORT}`);
-});
+module.exports = app;
