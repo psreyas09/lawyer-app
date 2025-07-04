@@ -34,27 +34,58 @@ console.log('Gemini API Key Loaded:', GEMINI_API_KEY ? 'Yes' : 'No');
 
 // Proxy endpoint for Indian Kanoon API search
 app.post('/proxy/kanoon/search', async (req, res) => {
+    console.log('Received request for /proxy/kanoon/search');
+    console.log('Request body:', req.body);
+    console.log('KANOON_API_KEY available:', !!process.env.KANOON_API_KEY);
+
     try {
         const { query, court, year } = req.body;
-        console.log('Making request to Kanoon API with query:', query, 'court:', court, 'year:', year);
-        console.log('Using API key from environment variable:', KANOON_API_KEY ? 'Key is set (hidden for security)' : 'Key is not set');
-        // Use POST request with form-urlencoded data to match expected API format
+        
+        if (!query) {
+            console.error('Validation Error: Search query is required.');
+            return res.status(400).json({ error: 'Search query is required' });
+        }
+
+        console.log(`Making request to Kanoon API with query: "${query}", court: "${court}", year: "${year}"`);
+
         const url = 'https://api.indiankanoon.org/search/';
-        let formData = `formInput=${encodeURIComponent(query)}&pagenum=0`;
-        if (court) formData += `&court=${encodeURIComponent(court)}`;
-        if (year) formData += `&year=${encodeURIComponent(year)}`;
-        const response = await axios.post(url, formData, {
+        const formData = new URLSearchParams();
+        formData.append('formInput', query);
+        formData.append('pagenum', '0');
+        if (court) formData.append('court', court);
+        if (year) formData.append('year', year);
+
+        const response = await axios.post(url, formData.toString(), {
             headers: {
-                'Authorization': `Token ${KANOON_API_KEY}`,
+                'Authorization': `Token ${process.env.KANOON_API_KEY}`,
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'Accept': 'application/json'
             }
         });
-        console.log('Received response from Kanoon API:', response.status, response.data);
+
+        console.log('Successfully received response from Kanoon API:', response.status);
         res.json(response.data);
+
     } catch (error) {
-        console.error('Error proxying Kanoon API request:', error.message, error.response?.data || 'No additional data');
-        res.status(error.response?.status || 500).json({ error: 'Failed to fetch data from Kanoon API', details: error.response?.data || error.message });
+        console.error('--- Kanoon API Proxy Error ---');
+        console.error('Timestamp:', new Date().toISOString());
+        if (error.response) {
+            console.error('Error Status:', error.response.status);
+            console.error('Error Headers:', JSON.stringify(error.response.headers, null, 2));
+            console.error('Error Data:', JSON.stringify(error.response.data, null, 2));
+        } else if (error.request) {
+            console.error('Error Request:', 'No response received from Kanoon API.');
+            console.error(error.request);
+        } else {
+            console.error('Error Message:', error.message);
+        }
+        console.error('Stack Trace:', error.stack);
+        console.error('--- End of Error Report ---');
+
+        res.status(500).json({ 
+            error: 'Failed to fetch data from Kanoon API.', 
+            details: error.response ? error.response.data : error.message 
+        });
     }
 });
 
