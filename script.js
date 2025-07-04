@@ -38,6 +38,20 @@ class VirtualLawyer {
         if (clearChatBtn) {
             clearChatBtn.addEventListener('click', () => this.clearChat());
         }
+
+        const openChatBtn = document.getElementById('openChatBtn');
+        const closeChatBtn = document.getElementById('closeChatBtn');
+        const chatContainer = document.querySelector('.chat-section-container');
+
+        if (openChatBtn && closeChatBtn && chatContainer) {
+            openChatBtn.addEventListener('click', () => {
+                chatContainer.classList.add('open');
+            });
+
+            closeChatBtn.addEventListener('click', () => {
+                chatContainer.classList.remove('open');
+            });
+        }
     }
 
     async performSearch() {
