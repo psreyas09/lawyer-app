@@ -6,472 +6,310 @@
     <title>Neethi - Legal Research Assistant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #4a90e2;
-            --secondary-color: #f5a623;
-            --background-color: #f8f9fa;
-            --text-color: #333;
-            --card-background: white;
-            --header-background: linear-gradient(135deg, #2c3e50, #3498db);
-            --button-background: var(--primary-color);
-        }
+    :root {
+        --primary-color: #4a90e2;
+        --secondary-color: #f5a623;
+        --background-color: #f8f9fa;
+        --text-color: #333;
+        --card-background: white;
+        --header-background: linear-gradient(135deg, #2c3e50, #3498db);
+        --button-background: var(--primary-color);
+    }
 
-        [data-theme="dark"] {
-            --background-color: #1a1a1a;
-            --text-color: #ffffff;
-            --card-background: #2d2d2d;
-            --header-background: linear-gradient(135deg, #1a1a1a, #2c3e50);
-            --button-background: var(--primary-color);
-        }
+    [data-theme="dark"] {
+        --background-color: #1a1a1a;
+        --text-color: #ffffff;
+        --card-background: #2d2d2d;
+        --header-background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+        --button-background: var(--primary-color);
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', sans-serif;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Roboto', sans-serif;
+    }
 
-        body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.6;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+        width: 100%;
+    }
+
+    /* Responsive Typography */
+    html {
+        font-size: 16px;
+    }
+
+    header {
+        background: var(--header-background);
+        color: white;
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    header h1 {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+
+    header p {
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
+        opacity: 0.9;
+    }
+
+    .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .action-card {
+        background: var(--card-background);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 180px;
+    }
+
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    }
+
+    .action-card i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+    }
+
+    .action-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-color);
+    }
+
+    .action-card p {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .search-section, .chat-section, #resultsSection {
+        background: var(--card-background);
+        border-radius: 12px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    .search-section h2, .chat-section h2, #resultsSection h2 {
+        font-size: clamp(1.5rem, 4vw, 2rem);
+        margin-bottom: 1.5rem;
+        color: var(--text-color);
+        border-bottom: 2px solid #eee;
+        padding-bottom: 1rem;
+    }
+
+    .search-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .search-bar input,
+    .search-bar select,
+    .search-bar button {
+        padding: 0.75rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        height: 48px;
+        transition: all 0.3s ease;
+    }
+
+    .search-bar input {
+        flex: 1 1 300px;
+    }
+    
+    .search-bar select {
+        flex: 1 1 150px;
+    }
+
+    .search-bar button {
+        flex: 0 0 auto;
+        background: var(--button-background);
+        color: white;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .search-bar button:hover {
+        opacity: 0.9;
+    }
+
+    #loadingSpinner {
+        display: none;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    #resultsSection {
+        display: none;
+    }
+
+    .chat-section {
+        height: 70vh;
+        max-height: 600px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #chatMessages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .message {
+        max-width: 85%;
+        padding: 0.75rem 1.25rem;
+        border-radius: 18px;
+        font-size: 1rem;
+        word-wrap: break-word;
+    }
+
+    .user-message {
+        background: var(--primary-color);
+        color: white;
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+    }
+
+    .bot-message {
+        background: #e9ecef;
+        color: #333;
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+    }
+    
+    [data-theme="dark"] .bot-message {
+        background: #3a3a3a;
+        color: #f1f1f1;
+    }
+
+    .chat-input {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .chat-input input {
+        flex: 1;
+        padding: 0.75rem 1.25rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+    }
+
+    #themeToggleBtn {
+        padding: 0.5rem 1rem;
+        background: var(--button-background);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        z-index: 1000;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 15px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
-        /* Base font size for responsive typography */
-        html {
-            font-size: 16px;
-        }
-
-        @media screen and (max-width: 1024px) {
-            .container {
-                padding: 15px 10px;
-            }
-            
-            .quick-actions {
-                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            }
-            
-            .action-card {
-                min-height: 160px;
-                padding: 15px 10px;
-            }
-            
-            .action-card i {
-                font-size: 2.5rem;
-                margin-bottom: 10px;
-            }
-            
-            .action-card h3 {
-                font-size: 1.2rem;
-            }
-        }
-        
-        @media screen and (max-width: 768px) {
-            header {
-                padding: 15px 0;
-            }
-            
-            header h1 {
-                font-size: 2rem;
-            }
-            
-            header p {
-                font-size: 1rem;
-            }
-            
-            .search-bar {
-                flex-direction: column;
-            }
-            
-            .search-bar input,
-            .search-bar select,
-            .search-bar button {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-            
-            .quick-actions {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
-        @media screen and (max-width: 480px) {
-            .quick-actions {
-                grid-template-columns: 1fr;
-            }
-            
-            .action-card {
-                min-height: 120px;
-                flex-direction: row;
-                text-align: left;
-                padding: 15px;
-            }
-            
-            .action-card i {
-                margin-right: 15px;
-                margin-bottom: 0;
-                font-size: 2rem;
-            }
-            
-            .action-card h3 {
-                margin-bottom: 5px;
-            }
-        }
-        
-        @media screen and (max-width: 768px) {
-            html {
-                font-size: 14px;
-            }
-        }
-
-        header {
-            background: var(--header-background);
-            color: white;
-            padding: 20px 0;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            position: relative;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .action-card {
-            background: var(--card-background);
-            border-radius: 12px;
-            padding: 20px 15px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 180px;
-        }
-
-        .action-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-
-        .action-card i {
-            font-size: 3rem;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-        }
-
-        .action-card h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: var(--text-color);
-        }
-
-        .action-card p {
-            font-size: 0.95rem;
-            color: #666;
-        }
-
-        .search-section {
-            background: var(--card-background);
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        .search-section h2 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-            color: var(--text-color);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+            padding: 1rem;
         }
 
         .search-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
+            flex-direction: column;
         }
-
+        
         .search-bar input,
         .search-bar select,
         .search-bar button {
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            min-height: 48px;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            transition: all 0.3s ease;
-        }
-
-        .search-bar input {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .search-bar select {
-            background-color: white;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23131313%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            background-size: 12px;
-            padding-right: 30px;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-        }
-
-        .search-bar button {
-            padding: 14px 30px;
-            background: var(--button-background);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .search-bar button:hover {
-            opacity: 0.9;
-        }
-
-        #loadingSpinner {
-            display: none;
-            text-align: center;
-            padding: 30px;
-            font-size: 1.2rem;
-            color: #666;
-        }
-
-        #loadingSpinner i {
-            font-size: 2rem;
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        #resultsSection {
-            display: none;
-            background: var(--card-background);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-        }
-
-        #resultsSection h2 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-            color: var(--text-color);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-
-        #searchResults {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .result-item {
-            border-bottom: 1px solid #eee;
-            padding-bottom: 20px;
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .result-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-color);
-        }
-
-        .result-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 10px;
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .result-meta span {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .result-snippet {
-            font-size: 1rem;
-            color: #444;
-            margin-bottom: 10px;
+            width: 100%;
         }
 
         .chat-section {
-            background: var(--card-background);
-            border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            height: 500px;
-            display: flex;
-            flex-direction: column;
+            height: 60vh;
+        }
+    }
+
+    @media (max-width: 480px) {
+        html {
+            font-size: 14px;
+        }
+        
+        .quick-actions {
+            grid-template-columns: 1fr;
         }
 
-        .chat-section h2 {
-            margin-bottom: 20px;
-            font-size: 2rem;
-            color: var(--text-color);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
+        .action-card {
+            flex-direction: row;
+            text-align: left;
+            padding: 1rem;
+            min-height: auto;
         }
 
-        #chatMessages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 20px;
+        .action-card i {
+            margin-right: 1rem;
+            margin-bottom: 0;
         }
-
-        .message {
-            max-width: 80%;
-            padding: 12px 18px;
-            border-radius: 12px;
-            font-size: 1rem;
+        
+        .search-section, .chat-section, #resultsSection {
+            padding: 1.5rem;
         }
-
-        .user-message {
-            background: var(--primary-color);
-            color: white;
-            align-self: flex-end;
-        }
-
-        .bot-message {
-            background: #e9ecef;
-            color: #333;
-            align-self: flex-start;
-        }
-
+        
         .chat-input {
-            display: flex;
-            gap: 15px;
+            flex-direction: column;
         }
-
-        .chat-input input {
-            flex: 1;
-            padding: 14px 18px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-        }
-
-        .chat-input input:focus {
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
-        }
-
+        
         .chat-input button {
-            padding: 14px 30px;
-            background: var(--button-background);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            justify-content: center;
         }
-
-        .chat-input button:hover {
-            opacity: 0.9;
-        }
-
-        #themeToggleBtn {
-            padding: 10px 20px;
-            background: var(--button-background);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            header h1 {
-                font-size: 2rem;
-            }
-
-            header p {
-                font-size: 1.1rem;
-            }
-
-            .search-bar {
-                flex-direction: column;
-            }
-
-            .chat-section {
-                height: 400px;
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
     <header>
