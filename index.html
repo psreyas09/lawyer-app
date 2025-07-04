@@ -3,20 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Lawyer - Legal Research Assistant</title>
+    <title>Neethi - Legal Research Assistant</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5a623;
+            --background-color: #f8f9fa;
+            --text-color: #333;
+            --card-background: white;
+            --header-background: linear-gradient(135deg, #2c3e50, #3498db);
+            --button-background: var(--primary-color);
+        }
+
+        [data-theme="dark"] {
+            --background-color: #1a1a1a;
+            --text-color: #ffffff;
+            --card-background: #2d2d2d;
+            --header-background: linear-gradient(135deg, #1a1a1a, #2c3e50);
+            --button-background: var(--primary-color);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
         body {
-            background-color: #f5f7fa;
-            color: #333;
+            background-color: var(--background-color);
+            color: var(--text-color);
             line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         .container {
@@ -26,22 +45,22 @@
         }
 
         header {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+            background: var(--header-background);
             color: white;
             padding: 25px 0;
             margin-bottom: 30px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         header h1 {
-            font-size: 2.2rem;
-            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 10px;
         }
 
         header p {
-            text-align: center;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             opacity: 0.9;
         }
 
@@ -53,9 +72,9 @@
         }
 
         .action-card {
-            background: white;
+            background: var(--card-background);
             border-radius: 12px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -69,34 +88,34 @@
         }
 
         .action-card i {
-            font-size: 2.5rem;
+            font-size: 3rem;
             margin-bottom: 15px;
-            color: #3498db;
+            color: var(--primary-color);
         }
 
         .action-card h3 {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             margin-bottom: 10px;
-            color: #2c3e50;
+            color: var(--text-color);
         }
 
         .action-card p {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             color: #666;
         }
 
         .search-section {
-            background: white;
+            background: var(--card-background);
             border-radius: 12px;
-            padding: 25px;
+            padding: 30px;
             margin-bottom: 30px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
         }
 
         .search-section h2 {
             margin-bottom: 20px;
-            font-size: 1.8rem;
-            color: #2c3e50;
+            font-size: 2rem;
+            color: var(--text-color);
             border-bottom: 2px solid #eee;
             padding-bottom: 10px;
         }
@@ -108,35 +127,27 @@
             margin-bottom: 20px;
         }
 
-        .search-bar input[type="text"] {
+        .search-bar input[type="text"],
+        .search-bar select {
             flex: 1;
             min-width: 250px;
-            padding: 12px 15px;
+            padding: 14px 18px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
             outline: none;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .search-bar input[type="text"]:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-        }
-
-        .search-bar select {
-            min-width: 150px;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 1rem;
-            background: white;
-            outline: none;
+        .search-bar input[type="text"]:focus,
+        .search-bar select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
         }
 
         .search-bar button {
-            padding: 12px 25px;
-            background: #3498db;
+            padding: 14px 30px;
+            background: var(--button-background);
             color: white;
             border: none;
             border-radius: 8px;
@@ -149,7 +160,7 @@
         }
 
         .search-bar button:hover {
-            background: #2980b9;
+            opacity: 0.9;
         }
 
         #loadingSpinner {
@@ -162,7 +173,7 @@
 
         #loadingSpinner i {
             font-size: 2rem;
-            color: #3498db;
+            color: var(--primary-color);
             margin-bottom: 10px;
             animation: spin 1s linear infinite;
         }
@@ -174,16 +185,16 @@
 
         #resultsSection {
             display: none;
-            background: white;
+            background: var(--card-background);
             border-radius: 12px;
-            padding: 25px;
+            padding: 30px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
         }
 
         #resultsSection h2 {
             margin-bottom: 20px;
-            font-size: 1.8rem;
-            color: #2c3e50;
+            font-size: 2rem;
+            color: var(--text-color);
             border-bottom: 2px solid #eee;
             padding-bottom: 10px;
         }
@@ -205,10 +216,10 @@
         }
 
         .result-title {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 10px;
-            color: #2c3e50;
+            color: var(--text-color);
         }
 
         .result-meta {
@@ -227,25 +238,25 @@
         }
 
         .result-snippet {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #444;
             margin-bottom: 10px;
         }
 
         .chat-section {
-            background: white;
+            background: var(--card-background);
             border-radius: 12px;
-            padding: 25px;
+            padding: 30px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-            height: 400px;
+            height: 500px;
             display: flex;
             flex-direction: column;
         }
 
         .chat-section h2 {
             margin-bottom: 20px;
-            font-size: 1.8rem;
-            color: #2c3e50;
+            font-size: 2rem;
+            color: var(--text-color);
             border-bottom: 2px solid #eee;
             padding-bottom: 10px;
         }
@@ -262,13 +273,13 @@
 
         .message {
             max-width: 80%;
-            padding: 10px;
-            border-radius: 8px;
-            font-size: 0.95rem;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 1rem;
         }
 
         .user-message {
-            background: #3498db;
+            background: var(--primary-color);
             color: white;
             align-self: flex-end;
         }
@@ -286,7 +297,7 @@
 
         .chat-input input {
             flex: 1;
-            padding: 12px 15px;
+            padding: 14px 18px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-size: 1rem;
@@ -294,13 +305,13 @@
         }
 
         .chat-input input:focus {
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
         }
 
         .chat-input button {
-            padding: 12px 25px;
-            background: #3498db;
+            padding: 14px 30px;
+            background: var(--button-background);
             color: white;
             border: none;
             border-radius: 8px;
@@ -313,7 +324,23 @@
         }
 
         .chat-input button:hover {
-            background: #2980b9;
+            opacity: 0.9;
+        }
+
+        #themeToggleBtn {
+            padding: 10px 20px;
+            background: var(--button-background);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
         }
 
         @media (max-width: 768px) {
@@ -322,11 +349,11 @@
             }
 
             header h1 {
-                font-size: 1.8rem;
+                font-size: 2rem;
             }
 
             header p {
-                font-size: 1rem;
+                font-size: 1.1rem;
             }
 
             .search-bar {
@@ -334,7 +361,7 @@
             }
 
             .chat-section {
-                height: 350px;
+                height: 400px;
             }
         }
     </style>
@@ -342,17 +369,16 @@
 <body>
     <header>
         <div class="container">
-            <h1>Virtual Lawyer</h1>
+            <h1>Neethi</h1>
             <p>Your AI-powered legal research assistant for Indian law</p>
         </div>
     </header>
 
+    <button id="themeToggleBtn">
+        <i class="fas fa-adjust"></i>
+    </button>
+
     <div class="container">
-        <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
-            <button id="themeToggleBtn" style="padding: 10px 20px; background: #3498db; color: white; border: none; border-radius: 8px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
-                <i class="fas fa-adjust"></i> Toggle Theme
-            </button>
-        </div>
         <div class="quick-actions">
             <div class="action-card" data-action="criminal">
                 <i class="fas fa-gavel"></i>
@@ -492,32 +518,21 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=1.2"></script>
     <script>
         // Theme toggle functionality
         document.addEventListener('DOMContentLoaded', () => {
             const themeToggleBtn = document.getElementById('themeToggleBtn');
-            const root = document.documentElement;
+            const body = document.body;
             let isDarkMode = localStorage.getItem('theme') === 'dark';
 
             function applyTheme() {
                 if (isDarkMode) {
-                    root.style.setProperty('--background-color', '#1a1a1a');
-                    root.style.setProperty('--text-color', '#ffffff');
-                    root.style.setProperty('--card-background', '#2d2d2d');
-                    root.style.setProperty('--header-background', 'linear-gradient(135deg, #1a1a1a, #2c3e50)');
-                    root.style.setProperty('--button-background', '#2c3e50');
-                    localStorage.setItem('theme', 'dark');
+                    body.setAttribute('data-theme', 'dark');
                 } else {
-                    root.style.setProperty('--background-color', '#f5f7fa');
-                    root.style.setProperty('--text-color', '#333');
-                    root.style.setProperty('--card-background', 'white');
-                    root.style.setProperty('--header-background', 'linear-gradient(135deg, #2c3e50, #3498db)');
-                    root.style.setProperty('--button-background', '#3498db');
-                    localStorage.setItem('theme', 'light');
+                    body.setAttribute('data-theme', 'light');
                 }
-                document.body.style.backgroundColor = isDarkMode ? '#1a1a1a' : '#f5f7fa';
-                document.body.style.color = isDarkMode ? '#ffffff' : '#333';
+                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
             }
 
             applyTheme();
@@ -528,45 +543,5 @@
             });
         });
     </script>
-    <style>
-        :root {
-            --background-color: #f5f7fa;
-            --text-color: #333;
-            --card-background: white;
-            --header-background: linear-gradient(135deg, #2c3e50, #3498db);
-            --button-background: #3498db;
-        }
-
-        body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        header {
-            background: var(--header-background);
-            transition: background 0.3s ease;
-        }
-
-        .action-card, .search-section, #resultsSection, .chat-section {
-            background: var(--card-background);
-            transition: background 0.3s ease;
-        }
-
-        .search-bar button, .chat-input button, #themeToggleBtn {
-            background: var(--button-background);
-            transition: background 0.3s ease;
-        }
-
-        .search-bar button:hover, .chat-input button:hover, #themeToggleBtn:hover {
-            background: var(--button-background);
-            opacity: 0.9;
-        }
-
-        .user-message {
-            background: var(--button-background);
-            transition: background 0.3s ease;
-        }
-    </style>
 </body>
 </html>
