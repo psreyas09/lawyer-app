@@ -117,10 +117,14 @@
         -webkit-text-fill-color: transparent;
     }
 
+    .action-card-content {
+        flex-grow: 1;
+    }
+
     .action-card h3 {
         font-size: 1.25rem;
         font-weight: 600;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.5rem;
         color: var(--text-color);
     }
 
@@ -504,23 +508,31 @@
         <div class="quick-actions">
             <div class="action-card" data-action="criminal">
                 <i class="fas fa-gavel"></i>
-                <h3>Criminal Law</h3>
-                <p>Search cases related to IPC, CrPC, and criminal matters</p>
+                <div class="action-card-content">
+                    <h3>Criminal Law</h3>
+                    <p>Search cases related to IPC, CrPC, and criminal matters</p>
+                </div>
             </div>
             <div class="action-card" data-action="civil">
                 <i class="fas fa-balance-scale"></i>
-                <h3>Civil Law</h3>
-                <p>Explore disputes, contracts, and property cases</p>
+                <div class="action-card-content">
+                    <h3>Civil Law</h3>
+                    <p>Explore disputes, contracts, and property cases</p>
+                </div>
             </div>
             <div class="action-card" data-action="constitutional">
                 <i class="fas fa-landmark"></i>
-                <h3>Constitutional Law</h3>
-                <p>Research fundamental rights and constitutional matters</p>
+                <div class="action-card-content">
+                    <h3>Constitutional Law</h3>
+                    <p>Research fundamental rights and constitutional matters</p>
+                </div>
             </div>
             <div class="action-card" data-action="corporate">
                 <i class="fas fa-building"></i>
-                <h3>Corporate Law</h3>
-                <p>Find cases on company law and commercial disputes</p>
+                <div class="action-card-content">
+                    <h3>Corporate Law</h3>
+                    <p>Find cases on company law and commercial disputes</p>
+                </div>
             </div>
         </div>
 
