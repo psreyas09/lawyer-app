@@ -45,7 +45,7 @@ class VirtualLawyer {
 
         if (openChatBtn && closeChatBtn && chatContainer) {
             openChatBtn.addEventListener('click', () => {
-                chatContainer.classList.add('open');
+                chatContainer.classList.toggle('open');
             });
 
             closeChatBtn.addEventListener('click', () => {
