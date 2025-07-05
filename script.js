@@ -154,6 +154,9 @@ class VirtualLawyer {
 
         document.getElementById('searchQuery').value = queries[action] || '';
         this.performSearch();
+        
+        // Scroll to results after initiating the search
+        document.getElementById('resultsSection').scrollIntoView({ behavior: 'smooth' });
     }
 
     addToChat(caseTitle) {
