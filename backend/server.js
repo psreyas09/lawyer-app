@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3000;
 
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://lawyer-app-orcin.vercel.app'
+    'https://neethi.vercel.app'
 ];
 
 app.use(cors({
